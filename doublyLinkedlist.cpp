@@ -98,6 +98,29 @@ void delete_at_front(){
    delete temp;
 }
 
+void delete_at_rear(){
+
+    if(current ==NULL){
+        return;
+    }
+
+    
+    Node*temp = current;
+
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+
+     if(temp->prev == NULL){
+        delete temp;
+        current = NULL;
+        return;
+     }
+    Node*temp1 = temp;
+    temp1->prev->next = NULL;
+    delete temp1;
+}
+
 void traverse_from_current() {
     Node* temp = current;
     while (temp->prev != NULL)

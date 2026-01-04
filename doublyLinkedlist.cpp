@@ -34,7 +34,12 @@ void Insert_at_head(int data) {
 
 void add_at_end(int data){
     if(current ==NULL){
-        cout<<"list is empty";
+       Node*temp = new Node;
+       temp->data = data;
+       temp->next = NULL;
+       temp->prev = NULL;
+       current = temp;
+       return;
     }
 
     Node *temp = current;
@@ -44,12 +49,41 @@ void add_at_end(int data){
     }
 
     Node*temp1 = new Node;
-    temp->data = data;
-    temp->next = NULL;
-    
-    temp->prev = temp1;
-    temp1->next = temp;
+    temp1->data = data;
+    temp1->next = NULL;
 
+    temp1->prev = temp;
+    temp->next = temp1;
+
+}
+
+void insert_at_any_position(int data, int n){
+    if(current ==NULL|| n ==1){
+        Node*temp = new Node;
+        temp->data = data;
+        temp->next = NULL;
+        temp->prev = NULL;
+        current = temp;
+
+        if (current !=NULL){
+            
+        }
+    }
+
+    Node*temp = current;
+    for(int i=0; i<n-2; i++){
+        temp = temp->next;
+    }
+    Node *temp1 = new Node;
+    temp1->data = data;
+    temp1->next = NULL;
+    temp1->next = temp->next;
+    temp->next = temp1;
+    temp1->prev = temp;
+
+    if(temp1->next!=NULL){
+        temp1->next->prev = temp1;
+    }
 }
 
 void traverse_from_current() {

@@ -155,6 +155,15 @@ void traverse_from_current() {
     }
     cout << endl;
 }
+void traverseForward(){
+    Node*temp = current;
+
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+    cout<<endl;
+}
 
 
 

@@ -121,6 +121,29 @@ void delete_at_rear(){
     delete temp1;
 }
 
+void delete_at_position(int n){
+    if(current == NULL) return;
+
+    if(n == 1){
+        Node*temp = current;
+        current = current->next;
+        if(current!=NULL)
+        current->prev = NULL;
+    }
+    Node*temp1 = current;
+    for(int i= 0; i<n-2; i++){
+        temp1 = temp1->next;
+    }
+    if(current->next == NULL){
+        return;
+    }
+    Node*temp2 = temp1->next;
+    temp1->next = temp2->next;
+    if(temp1->next !=NULL)
+    temp1->next->prev = temp1;
+    delete temp2;
+}
+
 void traverse_from_current() {
     Node* temp = current;
     while (temp->prev != NULL)

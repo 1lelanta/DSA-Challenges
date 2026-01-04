@@ -29,8 +29,27 @@ void Insert_at_head(int data) {
 
     head->prev = temp;
 
+
+}
+
+void add_at_end(int data){
+    if(current ==NULL){
+        cout<<"list is empty";
+    }
+
+    Node *temp = current;
+
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+
+    Node*temp1 = new Node;
+    temp->data = data;
+    temp->next = NULL;
     
-    current = temp; 
+    temp->prev = temp1;
+    temp1->next = temp;
+
 }
 
 void traverse_from_current() {
@@ -44,6 +63,8 @@ void traverse_from_current() {
     }
     cout << endl;
 }
+
+
 
 int main() {
   

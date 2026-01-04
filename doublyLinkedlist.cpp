@@ -86,6 +86,18 @@ void insert_at_any_position(int data, int n){
     }
 }
 
+void delete_at_front(){
+    if(current ==NULL){
+        return
+    }
+   Node*temp = current;
+   current = temp->next;
+    if(current!=NULL){
+        current->prev = NULL;
+    }
+   delete temp;
+}
+
 void traverse_from_current() {
     Node* temp = current;
     while (temp->prev != NULL)

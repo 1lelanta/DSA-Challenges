@@ -23,3 +23,21 @@ void push(int item){
         top = newNode;
     }
 }
+
+void pop(){
+
+    if(top==stack){
+        delete top;
+        top = stack = NULL;
+    }
+    if(top == NULL){
+        cout<<"stack underflow";
+        return;
+    }
+    Node*temp =  stack;
+    while(temp->next!=top){
+        temp = temp->next;
+    }
+    delete top;
+    top = temp;
+}

@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-// Node structure
+
 struct Node {
     int data;
     Node* prev;
@@ -19,7 +19,7 @@ void insertFront(int x) {
     temp->prev = NULL;
     temp->next = front;
 
-    if (front == NULL) { // empty deque
+    if (front == NULL) { 
         front = rear = temp;
     } else {
         front->prev = temp;
@@ -29,14 +29,13 @@ void insertFront(int x) {
     cout << x << " inserted at front\n";
 }
 
-// Insert at rear
 void insertRear(int x) {
     Node* temp = new Node;
     temp->data = x;
     temp->next = NULL;
     temp->prev = rear;
 
-    if (rear == NULL) { // empty deque
+    if (rear == NULL) { 
         front = rear = temp;
     } else {
         rear->next = temp;
@@ -46,7 +45,7 @@ void insertRear(int x) {
     cout << x << " inserted at rear\n";
 }
 
-// Delete from front
+
 void deleteFront() {
     if (front == NULL) {
         cout << "Underflow\n";
@@ -65,7 +64,7 @@ void deleteFront() {
     delete temp;
 }
 
-// Delete from rear
+
 void deleteRear() {
     if (rear == NULL) {
         cout << "Underflow\n";
@@ -84,7 +83,7 @@ void deleteRear() {
     delete temp;
 }
 
-// Display deque
+
 void displayDeque() {
     Node* temp = front;
     cout << "Deque: ";
@@ -95,7 +94,7 @@ void displayDeque() {
     cout << endl;
 }
 
-// Main function
+
 int main() {
     insertRear(10);
     insertRear(20);
@@ -112,8 +111,8 @@ int main() {
     deleteFront();
     deleteRear();
 
-    displayDeque(); // empty now
-    deleteFront();  // Underflow
+    displayDeque(); 
+    deleteFront();  
 
     return 0;
 }

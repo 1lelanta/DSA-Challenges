@@ -1,96 +1,121 @@
 #include <iostream>
-#include <cctype>
 using namespace std;
 
-// Node for stack
 struct Node {
-    char data;
-    Node* next;
+    int data;
+    Node* left;
+    Node* right;
 };
 
-// Global stack top
-Node* top = NULL;
-
-// Push operation
-void push(char x) {
-    Node* temp = new Node;
-    temp->data = x;
-    temp->next = top;
-    top = temp;
+// Create new node
+Node* createNode(int value) {
+    Node* node = new Node;
+    node->data = value;
+    node->left = node->right = nullptr;
+    return node;
 }
 
-// Pop operation
-char pop() {
-    if (top == NULL)
-        return '\0';
-    Node* temp = top;
-    char x = temp->data;
-    top = top->next;
-    delete temp;
-    return x;
+// Insert into BST
+Node* insert(Node* root, int value) {
+    if (!root) return createNode(value);
+    if (value < root->data)
+        root->left = insert(root->left, value);
+    else if (value > root->data)
+        root->right = insert(root->right, value);
+    return root;
 }
 
-// Peek operation
-char peek() {
-    if (top == NULL)
-        return '\0';
-    return top->data;
+// Find maximum node in a subtree (predecessor)
+Node* findMaxNode(Node* root) {
+    while (root && root->right)
+        root = root->right;
+    return root;
 }
 
-// Precedence function
-int precedence(char op) {
-    if (op == '^') return 3;
-    if (op == '*' || op == '/') return 2;
-    if (op == '+' || op == '-') return 1;
-    return 0;
-}
+// Merge deletion (always max from left subtree)
+Node* mergeDelete(Node* root, int key) {
+    if (!root) return nullptr;
 
-// Infix to Postfix conversion
-void infixToPostfix(string infix) {
-    string postfix = "";
+    if (key < root->data)
+        root->left = mergeDelete(root->left, key);
+    else if (key > root->data)
+        root->right = mergeDelete(root->right, key);
+    else {
+        // Node found
 
-    for (int i = 0; i < infix.length(); i++) {
-        char ch = infix[i];
+        // Case 1: No child
+        if (!root->left && !root->right) {
+            delete root;
+            return nullptr;
+        }
 
-        // Operand goes directly to output
-        if (isalnum(ch)) {
-            postfix += ch;
+        // Case 2: One child
+        if (!root->left) {
+            Node* temp = root->right;
+            delete root;
+            return temp;
         }
-        // Left parenthesis
-        else if (ch == '(') {
-            push(ch);
+        if (!root->right) {
+            Node* temp = root->left;
+            delete root;
+            return temp;
         }
-        // Right parenthesis
-        else if (ch == ')') {
-            while (top != NULL && peek() != '(') {
-                postfix += pop();
-            }
-            pop(); // remove '('
+
+        // Case 3: Two children (merge with max from left)
+        Node* leftSub = root->left;
+        Node* maxNode = findMaxNode(leftSub);
+
+        // Detach maxNode from its parent
+        if (maxNode != leftSub) {
+            Node* parent = leftSub;
+            while (parent->right != maxNode)
+                parent = parent->right;
+            parent->right = maxNode->left; // attach left subtree of maxNode
+            maxNode->left = leftSub;
         }
-        // Operator
-        else {
-            while (top != NULL && precedence(peek()) >= precedence(ch)) {
-                postfix += pop();
-            }
-            push(ch);
-        }
+        maxNode->right = root->right;
+
+        delete root;
+        return maxNode;
     }
-
-    // Pop remaining operators
-    while (top != NULL) {
-        postfix += pop();
-    }
-
-    cout << "Postfix expression: " << postfix << endl;
+    return root;
 }
 
-// Main function
+// Inorder traversal
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+// Main
 int main() {
-    string infix;
-    cout << "Enter infix expression: ";
-    cin >> infix;
+    Node* root = nullptr;
+    int n, val;
 
-    infixToPostfix(infix);
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Enter node " << i + 1 << ": ";
+        cin >> val;
+        root = insert(root, val);
+    }
+
+    cout << "Inorder BST: ";
+    inorder(root);
+    cout << endl;
+
+    int key;
+    cout << "Enter node to delete: ";
+    cin >> key;
+
+    root = mergeDelete(root, key);
+
+    cout << "BST after merge deletion (inorder): ";
+    inorder(root);
+    cout << endl;
 
     return 0;
 }

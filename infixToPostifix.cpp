@@ -45,8 +45,3 @@ string infixToPostifix(string infix){
 	return postifix;
 }
 
-int main(){
-	string infix = "a+b*c+(d*e+f)*g";
-    cout << "Postfix: " << infixToPostifix(infix) << endl;
-    return 0;
-}

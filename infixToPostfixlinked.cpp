@@ -25,6 +25,10 @@ Node* insert(Node* root, int value) {
     return root;
 }
 
+<<<<<<< HEAD
+=======
+// Find maximum node in a subtree (predecessor)
+>>>>>>> 675ed9dbbaa32774111dce336debba9569e19c29
 Node* findMaxNode(Node* root) {
     while (root && root->right)
         root = root->right;
@@ -81,12 +85,7 @@ Node* mergeDelete(Node* root, int key) {
 }
 
 // Inorder traversal
-void inorder(Node* root) {
-    if (!root) return;
-    inorder(root->left);
-    cout << root->data << " ";
-    inorder(root->right);
-}
+
 
 // Main
 int main() {

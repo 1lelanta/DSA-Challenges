@@ -25,7 +25,6 @@ Node* insert(Node* root, int value) {
     return root;
 }
 
-// Find maximum node in a subtree (predecessor)
 Node* findMaxNode(Node* root) {
     while (root && root->right)
         root = root->right;
